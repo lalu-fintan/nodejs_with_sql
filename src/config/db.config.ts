@@ -1,30 +1,17 @@
-import { Client } from "pg";
+import { Sequelize } from "sequelize";
 
-const connection = new Client({
+const sequelize = new Sequelize("postgres", "postgres", "12345678", {
   host: "localhost",
-  user: "postgres",
-  port: 5432,
-  password: "12345678",
-  database: "postgres",
+  dialect: "postgres",
 });
 
-connection.connect();
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
 
-connection.query(
-  `CREATE TABLE Persons (
-    PersonID int PRIMARY KEY,
-    LastName varchar(255),
-    FirstName varchar(255),
-    Address varchar(255),
-    City varchar(255)
-)`,
-  (err, res) => {
-    if (!err) {
-      console.log(res.rows, "12");
-    } else {
-      console.log(err.message);
-    }
-  }
-);
-
-export default connection;
+export default sequelize;
