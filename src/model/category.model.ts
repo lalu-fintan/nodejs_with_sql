@@ -26,6 +26,10 @@ const Category = sequelize.define(
         notEmpty: true,
       },
     },
+
+    totalMarks: {
+      type: DataTypes.INTEGER,
+    },
   },
   { timestamps: true }
 );
