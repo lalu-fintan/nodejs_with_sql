@@ -1,8 +1,9 @@
-import { DataTypes } from "sequelize";
 import sequelize from "../config/db.config";
+import { DataTypes } from "sequelize";
+import Category from "./category.model";
 
-const Category = sequelize.define(
-  "Category",
+const Question = sequelize.define(
+  "Question",
   {
     id: {
       type: DataTypes.UUID,
@@ -10,26 +11,22 @@ const Category = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    category: {
+    question: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         notEmpty: true,
       },
     },
-    description: {
-      type: DataTypes.TEXT,
-
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
+    answers: {
+      type: DataTypes.JSON,
     },
   },
   { timestamps: true }
 );
 
-Category.sync();
+Question.belongsTo(Category, { foreignKey: "CategoryId" });
 
-export default Category;
+Question.sync();
+
+export default Question;
