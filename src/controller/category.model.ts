@@ -17,7 +17,11 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const findCategories = async (req: Request, res: Response) => {
   try {
-    const category = await Category.findAll();
+    const category = await Category.findAll({}); //get all the attribute
+
+    // const category = await Category.findAll({  // get the specific attributes
+    //   attributes: ["category"],
+    // });
     res.status(200).json(category);
   } catch (error) {
     res.status(500).json(error);
@@ -27,7 +31,8 @@ export const findCategories = async (req: Request, res: Response) => {
 export const findCategoriesById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const category = await Category.findByPk(id);
+    // const category = await Category.findByPk(id);one method
+    const category = await Category.findOne({ where: { id } }); // second method (prefered)
     res.status(200).json(category);
   } catch (error) {
     res.status(500).json(error);
@@ -39,7 +44,8 @@ export const updateCategoriesById = async (req: Request, res: Response) => {
   const { category, description } = req.body;
   try {
     const update = await Category.update(
-      { category, description },
+      req.body,
+      // { category, description },//2nd method
       { where: { id } }
     );
 

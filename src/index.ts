@@ -14,7 +14,7 @@ mainRouter(app);
 const port = process.env.PORT || 5000;
 
 sequelize
-  .sync()
+  .sync({ force: false })
   .then(() => {
     console.log("Database created  successfully!");
   })

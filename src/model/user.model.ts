@@ -16,6 +16,12 @@ const User = sequelize.define(
       validate: {
         notEmpty: true,
       },
+
+      // want to store the username toUppercase in database use this...
+      get() {
+        const rawValue = this.getDataValue("userName");
+        return rawValue ? rawValue.toUpperCase() : null;
+      },
     },
     Email: {
       type: DataTypes.STRING,
@@ -23,6 +29,7 @@ const User = sequelize.define(
       unique: true,
       validate: {
         notEmpty: true,
+        isEmail: true,
       },
     },
     password: {
